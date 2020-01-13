@@ -20,6 +20,9 @@ class Game {
         this.guessesUsed++;
         this.lastGuess = number;
         this.won = this.secretNumber === this.lastGuess ? true : false;
+        if (this.won === true || this.guessesUsed >= 5){
+            this.endGame();
+        }
         this.completeCheck();
         const howFarOff = Math.abs(this.lastGuess - this.secretNumber);
         if (howFarOff >= 50){
@@ -50,6 +53,24 @@ class Game {
         const latestGuess = document.createElement('li');
         latestGuess.innerText = this.lastGuess;
         previousGuessLog.append(latestGuess);
+    }
+
+    endGame() {
+        console.log('game over, you win');
+        const congratulations = `Congratulations, ${this.secretNumber} was the number!`;
+        const consulations = `Sorry you lose, the number was ${this.secretNumber}.`;
+        const infoPopElem = document.getElementById('infoPop');
+        const infoPopText = document.getElementById('infoPop__text');
+        console.log(infoPopElem.className);
+        if (infoPopElem.className === 'infoPop--hidden') {
+            infoPopText.innerText = this.won ? congratulations : consulations;
+            infoPopElem.className = 'infoPop--visible';
+            setTimeout( function(){
+                infoPopText.innerText = '';
+                infoPopElem.className = 'infoPop--hidden';
+            }, 3750);
+        }
+        return this.hint;
     }
 
     getHint() {
@@ -114,6 +135,10 @@ const playAgainButton = document.querySelector('#playAgain');
 
 playAgainButton.addEventListener('click', function(){
     const guessListElem = document.getElementById('previous_guess_list');
+    const newGuessListElem = document.createElement('ul');
+    newGuessListElem.setAttribute('id', 'previous_guess_list');
+    guessListElem.replaceWith(newGuessListElem);
+
     startNewGame();
 });
 
