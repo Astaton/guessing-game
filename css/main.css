@@ -1,8 +1,15 @@
-/* div {
-    height: 200px;
-    width: 200px;
-    background-color: violet;
-} */
+#gameContainer {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#title {
+    text-align: center;
+}
+
+#controls_container {
+    margin: 25px 0;
+}
 
 .infoPop--hidden {
     display: none;

@@ -5,25 +5,27 @@
         <link rel='stylesheet' href='../css/main.css'>
     </head>
     <body>
-        <h1 id='title'>AAron's Guessing Game</h1>
-        <div id='previous_guess_container'>
-            <h2>Previous Guesses</h2>
-            <ul id='previous_guess_list'>
+        <div id='gameContainer'>
+            <h1 id='title'>AAron's Guessing Game</h1>
+            <div id='previous_guess_container'>
+                <h2>Previous Guesses</h2>
+                <ul id='previous_guess_list'>
 
-            </ul>
-            <h3 id='promptText'>5 Guesses Remaining, you've got this!</h3>
-        </div>
-        <div id='controls_container'>
-            <label for='guess'>Enter a number from 1 - 100:</label>
-            <input id='guessSubmitted' type='text' name='guess' required>
-            <input id='submitGuess' type='button' value='Submit your guess'>
-            <input id='playAgain' type='button' value='play again'>
-            <input id='getHint' type='button' value='Hint'>
-        </div>
-        <div id='infoPop' class='infoPop--hidden'>
-            <div id='infoPop__textContainer'>
-                <div id='infoPop__textWrapper'>
-                    <p id='infoPop__text'></p>
+                </ul>
+                <h3 id='promptText'>5 Guesses Remaining, you've got this!</h3>
+            </div>
+            <div id='controls_container'>
+                <label for='guess'>Enter a number from 1 - 100:</label>
+                <input id='guessInput' type='text' name='guess' required>
+                <input id='submitGuess' type='button' value='Submit your guess'>
+                <input id='playAgain' type='button' value='play again'>
+                <input id='getHint' type='button' value='Hint'>
+            </div>
+            <div id='infoPop' class='infoPop--hidden'>
+                <div id='infoPop__textContainer'>
+                    <div id='infoPop__textWrapper'>
+                        <p id='infoPop__text'></p>
+                    </div>
                 </div>
             </div>
         </div>

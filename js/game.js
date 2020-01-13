@@ -51,20 +51,21 @@ class Game {
     }
 
     endGame() {
-        console.log('game over, you win');
         const congratulations = `Congratulations, ${this.secretNumber} was the number!`;
         const consulations = `Sorry you lose, the number was ${this.secretNumber}.`;
         const infoPopElem = document.getElementById('infoPop');
         const infoPopText = document.getElementById('infoPop__text');
-        console.log(infoPopElem.className);
         if (infoPopElem.className === 'infoPop--hidden') {
             infoPopText.innerText = this.won ? congratulations : consulations;
             infoPopElem.className = 'infoPop--visible';
             setTimeout( function(){
                 infoPopText.innerText = '';
                 infoPopElem.className = 'infoPop--hidden';
+                resetScreen();
+                startNewGame();
             }, 3750);
         }
+
         return this.hint;
     }
 
@@ -100,13 +101,19 @@ class Game {
 }
 
 let theGame;
-
-const submitGuessElement = document.querySelector('#submitGuess');
+const domElement = {
+    submitGuess: document.querySelector('#submitGuess'),
+    guessInput: document.querySelector('#guessInput'),
+    hintButton: document.querySelector('#getHint'),
+    playAgainButton: document.querySelector('#playAgain'),
+    guessList: document.getElementById('previous_guess_list'),
+    // newGuessList: document.createElement('ul'),
+    createNewGuessList: function() { return document.createElement('ul')}
+}
 
 const submitGuess = function() {
-    const guessInputElement = document.querySelector('#guessSubmitted');
-    const numberSubmitted = parseInt(guessInputElement.value, 10);
-    guessInputElement.value = '';
+    const numberSubmitted = parseInt(domElement.guessInput.value, 10);
+    domElement.guessInput.value = '';
     if (Number.isNaN(numberSubmitted) || numberSubmitted < 1 || numberSubmitted > 100){
         theGame.guessNotANumber();
         return
@@ -117,44 +124,42 @@ const submitGuess = function() {
     theGame.updatePreviousGuessLog();
 }
 
-submitGuessElement.addEventListener('click', submitGuess);
+domElement.submitGuess.addEventListener('click', submitGuess);
 
 let focus;
-const guessSubmittedElem = document.getElementById('guessSubmitted');
-guessSubmittedElem.addEventListener('focus', (event) => {
-    console.log(event.srcElement.id);
+domElement.guessInput.addEventListener('focus', (event) => {
     focus = event.srcElement.id;
 });
 
-guessSubmittedElem.addEventListener('blur', () => {
+domElement.guessInput.addEventListener('blur', () => {
     focus = '';
 });
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && focus === 'guessSubmitted'){
+    if (event.key === 'Enter' && focus === 'guessInput'){
         submitGuess();
     }
 })
 
-const hintButton = document.querySelector('#getHint');
-
-hintButton.addEventListener('click', function(){
+domElement.hintButton.addEventListener('click', function(){
     console.log(theGame.getHint());
 });
 
-const playAgainButton = document.querySelector('#playAgain');
-
-playAgainButton.addEventListener('click', function(){
-    const guessListElem = document.getElementById('previous_guess_list');
-    const newGuessListElem = document.createElement('ul');
-    newGuessListElem.setAttribute('id', 'previous_guess_list');
-    guessListElem.replaceWith(newGuessListElem);
-
+domElement.playAgainButton.addEventListener('click', function(){
+    resetScreen();
     startNewGame();
 });
 
+function resetScreen() {
+    let newGuessList = document.createElement('ul');
+    const currentGuessList = document.getElementById('previous_guess_list');
+    newGuessList.setAttribute('id', 'previous_guess_list');
+    currentGuessList.replaceWith(newGuessList);
+}
+
 function startNewGame() {
     theGame = new Game(Math.ceil(Math.random() * 100));
+    theGame.updatePromptText();
     console.log(theGame);
 }
 
