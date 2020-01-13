@@ -1,0 +1,50 @@
+/* div {
+    height: 200px;
+    width: 200px;
+    background-color: violet;
+} */
+
+.infoPop--hidden {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.infoPop--visible {
+    background-color: #00000052;
+    backdrop-filter: blur(.2em);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#infoPop__textWrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+}
+
+#infoPop__textContainer {
+    height: 200px;
+    width: 300px;
+    background-color: white;
+    top: 35vh;
+    position: relative;
+    margin: auto auto;
+    border-radius: .5em;
+    box-shadow: 0 0 .5em black;
+}
+
+#infoPop__text {
+    /* margin: auto auto; */
+    margin: 0 0;
+    top: 45%;
+    left: 15%;
+    position: relative;
+}
