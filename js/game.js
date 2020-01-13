@@ -20,10 +20,9 @@ class Game {
         this.guessesUsed++;
         this.lastGuess = number;
         this.won = this.secretNumber === this.lastGuess ? true : false;
-        if (this.won === true || this.guessesUsed >= 5){
+        if (this.won || this.guessesUsed >= 5){
             this.endGame();
         }
-        this.completeCheck();
         const howFarOff = Math.abs(this.lastGuess - this.secretNumber);
         if (howFarOff >= 50){
             this.promptHint = 0;
@@ -42,10 +41,6 @@ class Game {
         }
         console.log(this);
         return this;
-    }
-
-    completeCheck() {
-        console.log('completeCheck');
     }
 
     updatePreviousGuessLog() {
@@ -108,7 +103,7 @@ let theGame;
 
 const submitGuessElement = document.querySelector('#submitGuess');
 
-submitGuessElement.addEventListener('click', function(){
+const submitGuess = function() {
     const guessInputElement = document.querySelector('#guessSubmitted');
     const numberSubmitted = parseInt(guessInputElement.value, 10);
     guessInputElement.value = '';
@@ -120,10 +115,26 @@ submitGuessElement.addEventListener('click', function(){
 
     theGame.updatePromptText();
     theGame.updatePreviousGuessLog();
-    if (theGame.won) {
-        console.log('Yov\'ve won. Congratulations!!');
-    }
+}
+
+submitGuessElement.addEventListener('click', submitGuess);
+
+let focus;
+const guessSubmittedElem = document.getElementById('guessSubmitted');
+guessSubmittedElem.addEventListener('focus', (event) => {
+    console.log(event.srcElement.id);
+    focus = event.srcElement.id;
 });
+
+guessSubmittedElem.addEventListener('blur', () => {
+    focus = '';
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && focus === 'guessSubmitted'){
+        submitGuess();
+    }
+})
 
 const hintButton = document.querySelector('#getHint');
 
